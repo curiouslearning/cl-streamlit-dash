@@ -127,3 +127,10 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# streamlit secrets
+.streamlit/secrets.toml
+
+# misc
+.DS_Store
+*/.DS_Store
