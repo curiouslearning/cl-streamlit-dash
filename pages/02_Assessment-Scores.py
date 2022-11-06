@@ -45,6 +45,17 @@ def load_assessment_completed_data(lang, ass_type, since, until):
         # remove duplicates -- for some reason double reporting can happen
         # TODO
 
+        # rename the columns
+        df.rename(columns={
+            'actor.name': "webSessionId",
+            'actor.account.name': "clUserId",
+            'result.score.raw': "scoreRaw",
+            'result.duration': "duration",
+            'verb.display.en-US': "type",
+            'actor.account.homePage': "userSource",
+            'result.score.max': "scoreRawMax"},
+            inplace=True, errors="ignore")
+
         # convert timestamp to datetime type
         df['timestamp'] = pd.to_datetime(df['timestamp'])
 
@@ -68,7 +79,7 @@ date_range_selection = st.sidebar.date_input(
     max_value=today)
 language_selection = st.sidebar.selectbox(
     'Language',
-    ('ukranian', 'english', 'zulu'))
+    ('ukranian', 'english', 'zulu', 'hausa'))
 
 assessment_selection = st.sidebar.selectbox(
     'Assessment',
