@@ -79,7 +79,7 @@ date_range_selection = st.sidebar.date_input(
     max_value=today)
 language_selection = st.sidebar.selectbox(
     'Language',
-    ('ukranian', 'english', 'zulu', 'hausa'))
+    ('ukranian', 'english', 'zulu', 'hausa', 'hausaNN'))
 
 assessment_selection = st.sidebar.selectbox(
     'Assessment',
@@ -106,19 +106,32 @@ if len(data.index) > 0:
     if st.checkbox('Show Timeline'):
         st.bar_chart(df)
 
+    # usersByDay = df[df['event_name'] == 'first_open'].groupby(
+    # ['event_date'])['event_date'].count().reset_index(name='count')
+    #
+    # usersByDayFig = px.line(usersByDay, x='event_date', y='count', labels={
+    #                      "event_date": "Date (Day)",
+    #                      "count": "New Users"},
+    #                      title = "New User Count by Day")
+    # st.plotly_chart(usersByDayFig)
+
     # # look at a count by user to find how many have complete multiply assmessments
-    # df_assbyuser_count = data.groupby(["actor.account.name"])[
-    #     "actor.account.name"].count().reset_index(name="count")
-    # st.write(df_assbyuser_count)
+    df_assbyuser_count = data.groupby(["clUserId"])[
+        "clUserId"].count().reset_index(name="count")
+    st.write(df_assbyuser_count)
+
+    test_data = data.groupby(["clUserId"])["timestamp"].agg(['min', 'max', 'count']).reset_index()
+    # test_data['timespan'] = date(test_data['max']) - date(test_data['min'])
+    st.write(test_data)
 
     if st.checkbox('Show Histogram'):
         st.subheader('Histogram of scores')
-        max_score = int(data['result.score.max'][0])
+        max_score = int(data['scoreRawMax'][0])
         num_bins = int(max_score / 20)
 
         h_data = pd.DataFrame()
         h_data['bins'] = list(range(0, max_score+1, 20))
-        h_data['counts'] = np.histogram(data['result.score.raw'],
+        h_data['counts'] = np.histogram(data['scoreRaw'],
                                         bins=num_bins+1,
                                         range=(0, max_score))[0]
 

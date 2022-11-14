@@ -158,7 +158,7 @@ date_range_selection = st.sidebar.date_input(
 
 language_selection = st.sidebar.selectbox(
     'Language',
-    ('ukranian', 'english', 'zulu', 'hausa'))
+    ('ukranian', 'english', 'zulu', 'hausa', 'hausaNN'))
 
 assessment_selection = st.sidebar.selectbox(
     'Assessment',
