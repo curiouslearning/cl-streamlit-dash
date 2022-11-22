@@ -79,7 +79,7 @@ date_range_selection = st.sidebar.date_input(
     max_value=today)
 language_selection = st.sidebar.selectbox(
     'Language',
-    ('ukranian', 'english', 'zulu', 'hausa', 'hausaNN'))
+    ('ukranian', 'english', 'zulu', 'hausa', 'hausaNN', 'bangla', 'french'))
 
 assessment_selection = st.sidebar.selectbox(
     'Assessment',
@@ -116,13 +116,13 @@ if len(data.index) > 0:
     # st.plotly_chart(usersByDayFig)
 
     # # look at a count by user to find how many have complete multiply assmessments
-    df_assbyuser_count = data.groupby(["clUserId"])[
-        "clUserId"].count().reset_index(name="count")
-    st.write(df_assbyuser_count)
-
-    test_data = data.groupby(["clUserId"])["timestamp"].agg(['min', 'max', 'count']).reset_index()
-    # test_data['timespan'] = date(test_data['max']) - date(test_data['min'])
-    st.write(test_data)
+    # df_assbyuser_count = data.groupby(["clUserId"])[
+    #     "clUserId"].count().reset_index(name="count")
+    # st.write(df_assbyuser_count)
+    #
+    # test_data = data.groupby(["clUserId"])["timestamp"].agg(['min', 'max', 'count']).reset_index()
+    # # test_data['timespan'] = date(test_data['max']) - date(test_data['min'])
+    # st.write(test_data)
 
     if st.checkbox('Show Histogram'):
         st.subheader('Histogram of scores')
