@@ -83,7 +83,7 @@ language_selection = st.sidebar.selectbox(
 
 assessment_selection = st.sidebar.selectbox(
     'Assessment',
-    ('letter-sound', 'pseudoword'))
+    ('letter-sound', 'pseudo-word'))
 
 # assessment data ------------------------------------------------------------
 
