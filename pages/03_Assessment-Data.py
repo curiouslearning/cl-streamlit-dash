@@ -18,7 +18,7 @@ CL_BASE_URL = st.secrets.db_credentials.cl_lrs_base_url
 # DATA FUNCTIONS -----------------------------------------------------------
 
 
-@st.cache
+@st.cache_data
 def load_actor_set(lang, ass_type, since, until):
     """Load completed statements for the Curious Learing LRS."""
     activity_param = f"activity=https://data.curiouslearning.org/xAPI/activities/assessment/{lang}/{ass_type}"
@@ -60,7 +60,7 @@ def data_clean_up(df):
                                             'object.location.lat', 'object.location.lng',
                                             'object.location.city', 'object.location.region',
                                             'object.location.country', 'option-0', 'option-1',
-                                            'option-2', 'option-3'])]]
+                                            'object.id', 'option-2', 'option-3'])]]
 
         df.rename(columns={"object.location.lat": "lat",
                            "object.location.lng": "lon",
@@ -75,7 +75,8 @@ def data_clean_up(df):
                            'result.score.max': "scoreRawMax",
                            'object.location.city': "city",
                            'object.location.region': "region",
-                           'object.location.country': "country"},
+                           'object.location.country': "country",
+                           'object.id': "itemURL"},
                   inplace=True, errors="ignore")
 
         df['lat'] = pd.to_numeric(df['lat'])
@@ -86,7 +87,7 @@ def data_clean_up(df):
     return df
 
 
-@st.cache
+@st.cache_data
 def load_assessment_data(lang, ass_type, since, until):
     """Load all data for actors that have completed the assessment."""
     df = pd.DataFrame()
@@ -110,7 +111,7 @@ def load_assessment_data(lang, ass_type, since, until):
     return data_clean_up(df)
 
 
-@st.cache
+@st.cache_data
 def load_assessment_data_alt(lang, ass_type, since, until):
     """Load all statment over time periods and filter out what you need."""
     df = pd.DataFrame()
@@ -135,7 +136,7 @@ def load_assessment_data_alt(lang, ass_type, since, until):
     return data_clean_up(df)
 
 
-@st.cache
+@st.cache_data
 def convert_df(df):
     """Convert a dataframe to CSV."""
     return df.to_csv().encode('utf-8')

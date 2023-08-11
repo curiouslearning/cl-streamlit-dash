@@ -15,7 +15,7 @@ today = date.today()
 
 # DATA FUNCTIONS -----------------------------------------------------------
 
-@st.cache
+@st.cache_data
 def load_assessment_completed_data(lang, ass_type, since, until):
     """Load completed statements for the Curious Learing LRS."""
     # geting values out of secrets.toml file
@@ -62,7 +62,7 @@ def load_assessment_completed_data(lang, ass_type, since, until):
     return df
 
 
-@st.cache
+@st.cache_data
 def convert_df(df):
     """Convert a dataframe to CSV."""
     return df.to_csv().encode('utf-8')
